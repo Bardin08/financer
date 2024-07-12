@@ -1,0 +1,6 @@
+﻿services:
+  financer.api:
+    image: financer.api
+    build:
+      context: .
+      dockerfile: Financer.Api/Dockerfile

@@ -1,0 +1,56 @@
+﻿name: Deploy to DROPLET
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract release version
+        id: release_version
+        run: echo "RELEASE_VERSION=$(echo ${GITHUB_REF#refs/tags/} | cut -c 2-)" >> $GITHUB_ENV
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0'
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Run Tests
+        run: dotnet test
+
+      - name: Variable Substitution in appsettings.json
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: '**/appsettings.json'
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to DROPLET
+        uses: appleboy/ssh-action@master
+        with:
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          host: ${{ secrets.DROPLET_HOST }}
+          username: ${{ secrets.DROPLET_USERNAME }}
+          key: ${{ secrets.DROPLET_KEY }}
+          script: |
+            docker container ls -q --filter name=financer > /tmp/current_container_id || true
+            if [ -s /tmp/current_container_id ]; then
+            docker stop $(cat /tmp/current_container_id) || true
+            docker rm $(cat /tmp/current_container_id) || true
+            fi
+
+            docker login ghcr.io -u bardin08 -p ${{ secrets.GITHUB_TOKEN }} 
+            docker pull ghcr.io/bardin08/financer:${{ github.event.release.tag_name}}
+            docker run -d -p 5217:8080 --name financer ghcr.io/bardin08/eduautomation:${{ github.event.release.tag_name}} 
