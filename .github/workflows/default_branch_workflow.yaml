@@ -68,4 +68,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/bardin08/Financer.Api:${{ steps.tag_version.outputs.new_tag }}
+          tags: ghcr.io/bardin08/financer:${{ steps.tag_version.outputs.new_tag }}
