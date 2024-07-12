@@ -1,6 +1,6 @@
 @Financer.Api_HostAddress = http://localhost:5116
 
-GET {{Financer.Api_HostAddress}}/weatherforecast/
+GET {{Financer.Api_HostAddress}}/ping/
 Accept: application/json
 
 ###
