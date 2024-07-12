@@ -25,10 +25,10 @@ jobs:
       - name: Run Tests
         run: dotnet test
 
-      - name: Variable Substitution in appsettings.json
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: '**/appsettings.json'
+#      - name: Variable Substitution in appsettings.json
+#        uses: microsoft/variable-substitution@v1
+#        with:
+#          files: '**/appsettings.json'
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
