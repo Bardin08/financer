@@ -53,4 +53,4 @@ jobs:
 
             docker login ghcr.io -u bardin08 -p ${{ secrets.GITHUB_TOKEN }} 
             docker pull ghcr.io/bardin08/financer:${{ env.RELEASE_VERSION }}
-            docker run -d -p 5217:8080 --name financer ghcr.io/bardin08/eduautomation:${{ env.RELEASE_VERSION }} 
+            docker run -d -p 5217:8080 --name financer ghcr.io/bardin08/financer:${{ env.RELEASE_VERSION }} 
