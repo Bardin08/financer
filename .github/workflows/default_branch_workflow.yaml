@@ -65,7 +65,7 @@ jobs:
       - name: Push Docker Image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./Financer.Api
           file: ./Dockerfile
           push: true
           tags: ghcr.io/bardin08/financer:${{ steps.tag_version.outputs.new_tag }}
