@@ -2,10 +2,8 @@
 
 public static class HealthEndpoints
 {
-    public static void MapHealthEndpoints(this IEndpointRouteBuilder endpoints)
+    public static void MapHealthEndpoints(this RouteGroupBuilder endpointsBuilder)
     {
-        var groupBuilder = endpoints.MapGroup("/api");
-
-        groupBuilder.MapGet("/healthz", () => Results.Ok("Healthy"));
+        endpointsBuilder.MapGet("/healthz", () => Results.Ok("Healthy"));
     }
 }
