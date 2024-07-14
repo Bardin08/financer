@@ -57,7 +57,7 @@ jobs:
         env:
           "Logging.Telegram.BotToken": "${{ secrets.TELEGRAM_BOT_TOKEN }}"
           "Logging.Telegram.ChatId": "${{ secrets.TELEGRAM_CHAT_ID }}"
-          "YNAB.Pat": "${{ secrets.YNAB_ACCESS_TOKEN }}
+          "YNAB.Pat": "${{ secrets.YNAB_ACCESS_TOKEN }}"
           "YNAB.BudgetId": "${{ secrets.YNAB_BUDGET_ID }}"
           "Monobank.AccessToken": "${{ secrets.MONOBANK_TOKEN }}"
 
