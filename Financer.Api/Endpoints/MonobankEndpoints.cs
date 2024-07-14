@@ -13,11 +13,13 @@ public static class MonobankEndpoints
 
         app.MapPost("/monobank/webhook", async (
             [FromBody] WebhookPayload payload,
-            [FromServices] IMonobankService monobankService) =>
+            [FromServices] IMonobankService monobankService,
+            [FromServices] ILogger logger) =>
         {
             if (payload.Type != "StatementItem")
             {
-                return Results.BadRequest();
+                logger.LogWarning("Unknown payload type: {Type}, Full payload: {@Payload}", payload.Type, payload);
+                return Results.Ok();
             }
 
             await monobankService.AddTransactionToYnab(
