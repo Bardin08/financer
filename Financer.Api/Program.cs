@@ -6,6 +6,7 @@ builder.Configuration.AddUserSecrets<Program>();
 builder.AddLogging();
 
 builder.Services.AddDevTools();
+builder.Services.AddExternalServices(builder.Configuration);
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

@@ -9,5 +9,6 @@ public static class EndpointsExtensions
         var apiEndpoints = app.MapGroup("/api");
 
         apiEndpoints.MapHealthEndpoints();
+        apiEndpoints.MapMonobankEndpoints();
     }
 }
